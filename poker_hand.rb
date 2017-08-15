@@ -19,6 +19,8 @@ class Card
 end
 
 class Hand
+  include Comparable
+
   attr_reader :cards
 
   def initialize(cards:)
@@ -45,6 +47,14 @@ class Hand
     winning_category.rank
   end
 
+  def <=>(another_hand)
+    winning_category <=> another_hand.winning_category
+  end
+
+  def compare(another_hand)
+    self <=> (another_hand)
+  end
+
   private
 
   def pluck(attr)
@@ -65,6 +75,8 @@ class Hand
 end
 
 class Category
+  include Comparable
+
   attr_reader :hand
 
   def initialize(hand)
@@ -73,6 +85,15 @@ class Category
 
   def rank
     hand.highest_card.rank
+  end
+
+  def to_sym
+   self.class.name.underscore.to_sym
+  end
+
+  def <=>(another_category)
+    CategoryCollection::CATEGORY_ORDER.index(to_sym) <=>
+    CategoryCollection::CATEGORY_ORDER.index(another_category.to_sym)
   end
 end
 
