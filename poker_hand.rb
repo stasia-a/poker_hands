@@ -66,11 +66,11 @@ class Hand
   end
 
   def group_by_suit
-    cards.inject(Hash.new(0)) { |h, c| h[[c.suit]] += 1 ; h }
+    cards.inject(Hash.new(0)) { |h, c| h[c.suit] += 1 ; h }
   end
 
   def group_by_value
-    cards.inject(Hash.new(0)) { |h, c| h[[c.value]] += 1 ; h }
+    cards.inject(Hash.new(0)) { |h, c| h[c.value] += 1 ; h }
   end
 end
 
@@ -92,8 +92,8 @@ class Category
   end
 
   def <=>(another_category)
-    comparison = CategoryCollection::CATEGORY_ORDER.index(to_sym) <=>
-    CategoryCollection::CATEGORY_ORDER.index(another_category.to_sym)
+    comparison = CategoryCollection::CATEGORY_ORDER.index(another_category.to_sym) <=>
+    CategoryCollection::CATEGORY_ORDER.index(to_sym)
     comparison.zero? ? rank <=> another_category.rank : comparison
   end
 end
